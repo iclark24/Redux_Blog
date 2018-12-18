@@ -18,8 +18,8 @@ class EditBlog extends React.Component {
     const { name, body } = this.state;
     const blog = { name, id, body, editing: false };
     dispatch({ type: 'EDIT_BLOG', blog, });
-    this.setState({ name: '', body: '' });
-    
+    dispatch({ type: "TOGGLE_EDIT", blog})
+
   }
 
   render() {

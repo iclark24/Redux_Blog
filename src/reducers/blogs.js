@@ -13,7 +13,11 @@ const blogs = ( state = [], action ) => {
       return blog
     })   
     case 'EDIT_BLOG':
-      return state
+    return state.map( blog => {
+      if (blog.id === action.blog.id)
+        return {...blog, name: action.blog.name, body: action.blog.body, editing: !blog.editing}
+      return blog
+    })    
     default:
       return state
   }

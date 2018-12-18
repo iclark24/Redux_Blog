@@ -6,7 +6,7 @@ import EditBlog from './EditBlog';
 const Blog = ({ id, name, body, dispatch, editing }) => (
   <Grid.Column>
     {editing? 
-      <EditBlog/>
+      <EditBlog id={id} dispatch={dispatch}/>
     :
     <Item>
       <Item.Header>
