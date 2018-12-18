@@ -5,7 +5,7 @@ import {Header, Form, Input, TextArea, Button} from "semantic-ui-react"
 class EditBlog extends React.Component {
 
   
-  state = { name: '', body: "",};
+  state = { name: this.props.name, body: this.props.body,};
   
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value, });
@@ -18,8 +18,6 @@ class EditBlog extends React.Component {
     const { name, body } = this.state;
     const blog = { name, id, body, editing: false };
     dispatch({ type: 'EDIT_BLOG', blog, });
-    dispatch({ type: "TOGGLE_EDIT", blog})
-
   }
 
   render() {
