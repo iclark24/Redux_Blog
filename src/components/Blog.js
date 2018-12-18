@@ -12,11 +12,11 @@ const Blog = ({ id, name, body, dispatch, editing }) => (
       <Item.Header>
       <Header textAlign="center" as="h2">{ name }</Header>
       </Item.Header>
-      <Item.Description textAlign="center">
+      <Item.Description>
       <Segment attached="top" textAlign="center">
       { body }
       </Segment>
-      <Button.Group attached="bottom" fluid widths="equal">
+      <Button.Group attached="bottom" fluid >
       <Button color="orange" onClick={() => dispatch({ type: 'TOGGLE_EDIT', id })}
 >
         Edit

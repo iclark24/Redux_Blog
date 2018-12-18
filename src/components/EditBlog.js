@@ -27,11 +27,11 @@ class EditBlog extends React.Component {
       <div>
         <Header as="h1">Edit Blog</Header>
         <Form onSubmit={this.handleSubmit}>
-          <Form.Field width="5">
+          <Form.Field>
             <label>Title</label>
           <Input name="name" value={name} onChange={this.handleChange} />
           </Form.Field>
-          <Form.Field width="5">
+          <Form.Field>
             <label>Body</label>
             <TextArea name="body" value={body} onChange={this.handleChange} />
           </Form.Field>
