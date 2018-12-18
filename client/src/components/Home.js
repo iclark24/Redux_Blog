@@ -2,11 +2,11 @@ import React from 'react';
 import { Header, Container,} from 'semantic-ui-react';
 import { Link, } from 'react-router-dom';
 
-const NoMatch = () => (
+const Home = () => (
   <Container>
     <Link to="/blogs">View All blogs</Link>
-    <Header as="h3" textAlign="center">404 Page Not Found</Header>
+    <Header as="h3" textAlign="center">Home</Header>
   </Container>
 )
 
-export default NoMatch
+export default Home

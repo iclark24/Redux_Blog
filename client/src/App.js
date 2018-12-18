@@ -1,21 +1,19 @@
 import React, { Fragment, } from 'react';
 import { Route, Switch, } from 'react-router-dom';
-import Blogs from './components/Blogs';
-import About from './components/About';
+import Home from './components/Home';
 import NoMatch from './components/NoMatch';
 import NavBar from "./components/NavBar"
 import {Container} from "semantic-ui-react"
-import Blog from "./components/Blog"
+import FetchBlogs from "./components/FetchBlogs"
 
 const App = () => (
   <Fragment>
     <NavBar/>
     <Container>
     <Switch>
-      <Route exact path="/" component={Blogs} />
-      <Route exact path="/blog/:id" component={Blog} />
-      {/* <Route path="/about" component={About} /> */}
-      {/* <Route component={NoMatch} /> */}
+      <Route exact path="/" component={Home} />
+      <Route path="/blogs" component={FetchBlogs} />
+      <Route component={NoMatch} />
     </Switch>
     </Container>
   </Fragment>

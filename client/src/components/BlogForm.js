@@ -1,49 +1,57 @@
 import React from 'react';
-import { connect, } from 'react-redux';
-import {Header, Form, Input, TextArea, Button} from "semantic-ui-react"
+import { connect, } from 'react-redux'
+import { updateblog, addblog, } from '../reducers/blogs'
+import { Form, } from 'semantic-ui-react';
 
 class BlogForm extends React.Component {
-  state = { name: '', body: "",};
-  
-  handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value, });
+  initialState = { 
+    name: '', 
+    body: '', 
   };
 
+  state = {...this.initialState};
+
+  componentDidMount() {
+    if (this.props.id) 
+      this.setState({ ...this.props, });
+  }
+
+  handleChange = (e) => {
+    const { name, value, } = e.target;
+    this.setState({ [name]: value, });
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { dispatch, id, } = this.props;
-    const { name, body } = this.state;
-    const blog = { name, id, body, editing: false };
-    dispatch({ type: 'ADD_BLOG', blog, });
-    dispatch({ type: "INC_ID" })
-    this.setState({ name: '', body: '' });
+    const blog = { ...this.state, };
+    const { closeForm, dispatch, } = this.props;
+    const func = this.props.id ? updateblog : addblog;
+    dispatch(func(blog));
+    closeForm();
   }
 
   render() {
-    const { name, body} = this.state;
+    const { name, body, } = this.props;
 
     return (
-      <div>
-        <Header as="h1">New Blog</Header>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Field width="5">
-            <label>Title</label>
-          <Input name="name" value={name} onChange={this.handleChange} />
-          </Form.Field>
-          <Form.Field width="5">
-            <label>Body</label>
-            <TextArea name="body" value={body} onChange={this.handleChange} />
-          </Form.Field>
-          <Button color="green">Submit</Button>
-        </Form>
-      </div>
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Input
+          name="name"
+          required
+          defaultValue={name}
+          onChange={this.handleChange}
+          label="Name"
+        />
+        <Form.TextArea
+          name="body"
+          defaultValue={body}
+          onChange={this.handleChange}
+          label="Body"
+        />
+        <Form.Button color="green">Save</Form.Button>
+      </Form>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return { id: state.nextID, };
-}
-
-export default connect(mapStateToProps)(BlogForm);
+export default connect()(BlogForm);

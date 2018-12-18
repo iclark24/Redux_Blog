@@ -1,35 +1,58 @@
 import React from 'react';
 import { connect, } from 'react-redux';
-import { Header, Grid, Button, Item, Segment } from "semantic-ui-react"
-import EditBlog from './EditBlog';
+import { Button, Header, Container, Segment, } from 'semantic-ui-react';
+import { Link, } from 'react-router-dom';
+import BlogForm from "./BlogForm"
+import {deleteblog} from "../reducers/blogs"
 
-const Blog = ({ id, name, body, dispatch, editing }) => (
-  <Grid.Column>
-    {editing? 
-      <EditBlog id={id} dispatch={dispatch} name={name} body={body}/>
-    :
-    <Item>
-      <Item.Header>
-      <Header textAlign="center" as="h2">{ name }</Header>
-      </Item.Header>
-      <Item.Description>
-      <Segment attached="top" textAlign="center">
-      { body }
-      </Segment>
-      <Button.Group attached="bottom" fluid >
-      <Button color="orange" onClick={() => dispatch({ type: 'TOGGLE_EDIT', id })}
->
-        Edit
+class Blog extends React.Component {
+  state = { showForm: false, };
+
+  toggleForm = () => {
+    this.setState( state => {
+      return { showForm: !state.showForm, };
+    })
+  }
+
+  handleDelete = () => {
+    const { blog, dispatch, history: { push, }, } = this.props;
+    dispatch(deleteblog(blog.id));
+    push("/blogs");
+  }
+
+  render() {
+    const { showForm, } = this.state;
+    const { blog = {}, } = this.props;
+
+    return (
+    <Container>
+      <Link to="/blogs">View All Blogs</Link>
+      <Button color="orange" onClick={this.toggleForm}>
+        { showForm ? 'Cancel' : 'Edit' }
       </Button>
-      <Button color="red" onClick={() => dispatch({ type: 'DELETE_BLOG', id })}
->
+      <Button color="red" onClick={this.handleDelete}>
         Delete
       </Button>
-      </Button.Group>
-      </Item.Description>
-    </Item>
-    }
-  </Grid.Column>  
+      { showForm ?
+        <BlogForm {...blog} closeForm={this.toggleForm} />
+      :
+        <div>
+          <Header as="h3" textAlign="center">
+            {blog.name}
+          </Header>
+          <Segment>{blog.body}</Segment>
+        </div>
+      }
+  </Container>
 )
 
-export default connect()(Blog);
+
+    }
+  }
+    
+
+const mapStateToProps = (state, props) => {
+  return { blog: state.blogs.find( a => a.id === parseInt(props.match.params.id )) }
+}
+
+export default connect(mapStateToProps)(Blog); 

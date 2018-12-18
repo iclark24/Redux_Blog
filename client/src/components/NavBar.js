@@ -6,6 +6,11 @@ const NavBar = () => (
   <Menu>
     <Link to="/">
       <Menu.Item>
+        Home
+      </Menu.Item>
+    </Link>
+    <Link to="/blogs">
+      <Menu.Item>
         Blogs
       </Menu.Item>
     </Link>

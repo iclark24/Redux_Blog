@@ -1,39 +1,63 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Blog from './Blog';
+import { Link, } from 'react-router-dom';
 import BlogForm from "./BlogForm"
-import {Grid, Segment } from "semantic-ui-react"
+import { Container, Header, Card, Button, } from 'semantic-ui-react';
 
-const Blogs = ({ blogs }) => (
-  <div>
-    <BlogForm/>
-    <Segment basic>
-      <Grid columns="2">
-        { 
-          blogs.map( (t) => {
-            return ( <Blog key={t.id} {...t} /> )
-          })
+class Blogs extends React.Component {
+
+  state = { showForm: false, };
+
+  toggleForm = () => {
+    this.setState( state => {
+      return { showForm: !state.showForm, };
+    })
+  }
+
+  blogs = () => {
+    let {blogs} = this.props;
+    return blogs.map( blog =>
+      <Card key={ blog.id }>
+        <Card.Content>
+          <Card.Header>
+            {blog.name}
+          </Card.Header>
+          <Card.Description>
+            { blog.body }
+          </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <Link to={`/blogs/${blog.id}`}>
+            View blog
+          </Link>
+        </Card.Content>
+      </Card>
+    )
+  }
+
+  render() {
+    const {showForm,} = this.state
+
+    return (
+      <Container>
+        <Header as="h1" textAlign="center">Blogs</Header>
+        <Button color="blue" onClick={this.toggleForm}>
+          { showForm ? 'Cancel' : 'New Blog' }
+        </Button>
+        { showForm ?
+            <BlogForm closeForm={this.toggleForm} />
+          :
+          <Card.Group itemsPerRow={4}>
+           { this.blogs() }
+          </Card.Group>
         }
-      </Grid>
-    </Segment>
-  </div>
-)
+        </Container>
+      )
+    }
+  }
 
-const mapStateToProps = (state) => {
-  return { blogs: state.blogs, };
-}
+  const mapStateToProps = (state) => {
+    return { blogs: state.blogs, };
+  }
 
 export default connect(mapStateToProps)(Blogs);
-
-
-// THIS BLOCK BELOW WOULD ALLOW ME TO VIEW AN INDIVIDUAL BLOG, BUT REDUX DONT LIKE LINK TO, SO THIS DONT WORK. 
-//
-// blogs.map( (t) => {
-//   return (
-//     <Link to={`/blog/${t.id}`}>
-//      <Segment>
-//       <div key={t.id}>
-//       {t.name}
-//       </div>
-//      </Segment>
-//     </Link>
