@@ -1,9 +1,13 @@
 import React from 'react';
 import { connect, } from 'react-redux';
 import { Header, Grid, Button, Item, Segment } from "semantic-ui-react"
+import EditBlog from './EditBlog';
 
-const Blog = ({ id, name, body, dispatch }) => (
+const Blog = ({ id, name, body, dispatch, editing }) => (
   <Grid.Column>
+    {editing? 
+      <EditBlog/>
+    :
     <Item>
       <Item.Header>
       <Header textAlign="center" as="h2">{ name }</Header>
@@ -24,6 +28,7 @@ const Blog = ({ id, name, body, dispatch }) => (
       </Button.Group>
       </Item.Description>
     </Item>
+    }
   </Grid.Column>  
 )
 

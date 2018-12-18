@@ -11,7 +11,9 @@ const blogs = ( state = [], action ) => {
       if (blog.id === action.id)
         return {...blog, editing: !blog.editing}
       return blog
-    })    
+    })   
+    case 'EDIT_BLOG':
+      return state
     default:
       return state
   }

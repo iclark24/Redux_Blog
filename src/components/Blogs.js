@@ -24,3 +24,16 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(Blogs);
+
+
+// THIS BLOCK BELOW WOULD ALLOW ME TO VIEW AN INDIVIDUAL BLOG, BUT REDUX DONT LIKE LINK TO, SO THIS DONT WORK. 
+//
+// blogs.map( (t) => {
+//   return (
+//     <Link to={`/blog/${t.id}`}>
+//      <Segment>
+//       <div key={t.id}>
+//       {t.name}
+//       </div>
+//      </Segment>
+//     </Link>
